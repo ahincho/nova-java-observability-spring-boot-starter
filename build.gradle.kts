@@ -8,7 +8,6 @@ plugins {
 versioning {
     releaseMode = "snapshot"
     displayMode = "snapshot"
-    dirty = { it }
     releaseBuild = false
 }
 
