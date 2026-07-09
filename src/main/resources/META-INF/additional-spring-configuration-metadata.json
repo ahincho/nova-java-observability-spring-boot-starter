@@ -1,0 +1,106 @@
+{
+  "groups": [
+    {
+      "name": "nova.observability",
+      "description": "Configuración del starter de observabilidad Nova Platform."
+    },
+    {
+      "name": "nova.observability.otlp",
+      "description": "Configuración del exportador OTLP hacia el OpenTelemetry Collector."
+    },
+    {
+      "name": "nova.observability.metrics",
+      "description": "Configuración de métricas de observabilidad."
+    },
+    {
+      "name": "nova.observability.metrics.golden-signals",
+      "description": "Configuración de las métricas Four Golden Signals."
+    },
+    {
+      "name": "nova.observability.traces",
+      "description": "Configuración de trazas distribuidas."
+    },
+    {
+      "name": "nova.observability.logs",
+      "description": "Configuración de correlación de logs."
+    },
+    {
+      "name": "nova.observability.filter",
+      "description": "Configuración del filtro HTTP de métricas."
+    }
+  ],
+  "properties": [
+    {
+      "name": "nova.observability.enabled",
+      "type": "java.lang.Boolean",
+      "description": "Activa o desactiva toda la observabilidad del starter.",
+      "defaultValue": true
+    },
+    {
+      "name": "nova.observability.otlp.endpoint",
+      "type": "java.lang.String",
+      "description": "Endpoint del OpenTelemetry Collector para exportación OTLP.",
+      "defaultValue": "http://localhost:4318"
+    },
+    {
+      "name": "nova.observability.otlp.protocol",
+      "type": "java.lang.String",
+      "description": "Protocolo de exportación OTLP (http/protobuf o grpc).",
+      "defaultValue": "http/protobuf"
+    },
+    {
+      "name": "nova.observability.otlp.timeout",
+      "type": "java.time.Duration",
+      "description": "Timeout de exportación OTLP.",
+      "defaultValue": "10s"
+    },
+    {
+      "name": "nova.observability.metrics.enabled",
+      "type": "java.lang.Boolean",
+      "description": "Activa o desactiva las métricas de observabilidad.",
+      "defaultValue": true
+    },
+    {
+      "name": "nova.observability.metrics.golden-signals.enabled",
+      "type": "java.lang.Boolean",
+      "description": "Activa o desactiva el registro de Four Golden Signals.",
+      "defaultValue": true
+    },
+    {
+      "name": "nova.observability.traces.enabled",
+      "type": "java.lang.Boolean",
+      "description": "Activa o desactiva las trazas distribuidas.",
+      "defaultValue": true
+    },
+    {
+      "name": "nova.observability.traces.sampling-ratio",
+      "type": "java.lang.Double",
+      "description": "Ratio de sampling de trazas (0.0 a 1.0). 1.0 significa todas las trazas.",
+      "defaultValue": 1.0
+    },
+    {
+      "name": "nova.observability.logs.enabled",
+      "type": "java.lang.Boolean",
+      "description": "Activa o desactiva la correlación de logs con traceId/spanId.",
+      "defaultValue": true
+    },
+    {
+      "name": "nova.observability.logs.export-to-otlp",
+      "type": "java.lang.Boolean",
+      "description": "Exportar logs al Collector vía OTLP.",
+      "defaultValue": true
+    },
+    {
+      "name": "nova.observability.filter.exclude-paths",
+      "type": "java.util.List<java.lang.String>",
+      "description": "Lista de rutas excluidas del registro de métricas del filtro HTTP.",
+      "defaultValue": ["/actuator", "/swagger-ui", "/v3/api-docs"]
+    },
+    {
+      "name": "nova.observability.filter.normalize-ids",
+      "type": "java.lang.Boolean",
+      "description": "Normalizar IDs en URIs usando path patterns de Spring MVC.",
+      "defaultValue": true
+    }
+  ]
+}
