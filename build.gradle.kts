@@ -3,8 +3,8 @@ plugins {
     `maven-publish`
 }
 
-group = "pe.edu.galaxy.training.java.starters"
-version = "1.0.0"
+group = "pe.edu.nova.java.starters"
+version = findProperty("version") as String
 
 java {
     toolchain {
@@ -32,7 +32,7 @@ dependencies {
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor:$springBootVersion")
 
     // Librería pura (transitiva al consumidor)
-    api("pe.edu.galaxy.training.java.libs:galaxy-training-observability-utils:1.0.0")
+    api("pe.edu.nova.java.libs:nova-observability-utils:0.1.0-SNAPSHOT")
 
     // Spring Boot
     implementation("org.springframework.boot:spring-boot-starter")
