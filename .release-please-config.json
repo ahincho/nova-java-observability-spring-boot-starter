@@ -1,0 +1,12 @@
+{
+  "packages": {
+    ".": {
+      "package-name": "pe.edu.nova.java.starters:nova-observability-starter",
+      "release-type": "java",
+      "bump-minor-pre-major": true,
+      "bump-patch-for-minor-pre-major": true,
+      "draft": false,
+      "prerelease": false
+    }
+  }
+}
