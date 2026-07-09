@@ -1,6 +1,14 @@
 plugins {
     `java-library`
     `maven-publish`
+    id("net.nemerosa.versioning") version "4.0.1"
+}
+
+versioning {
+    releaseMode = "snapshot"
+    displayMode = "snapshot"
+    dirty = { it }
+    releaseBuild = false
 }
 
 group = "pe.edu.nova.java.starters"
