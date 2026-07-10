@@ -76,3 +76,8 @@ jobs:
         env:
           GITHUB_ACTOR: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Used only to READ internal Nova Platform dependencies published in other
+          # repos' GitHub Packages (GITHUB_TOKEN cannot read packages cross-repo).
+          # Falls back to GITHUB_TOKEN if the PAT is not configured (will fail to
+          # resolve cross-repo dependencies, but keeps same-repo publish working).
+          NOVA_PACKAGES_READ_TOKEN: ${{ secrets.NOVA_RELEASE_PAT || secrets.GITHUB_TOKEN }}

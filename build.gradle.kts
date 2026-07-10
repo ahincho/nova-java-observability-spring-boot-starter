@@ -27,6 +27,17 @@ repositories {
     maven {
         url = uri("https://repo.spring.io/milestone")
     }
+    // Internal Nova Platform dependency (nova-observability-utils lives in its own repo/package).
+    // GITHUB_TOKEN cannot read packages from another repo, so this needs a PAT
+    // (falls back to GITHUB_TOKEN for local/manual builds where only that is set).
+    maven {
+        name = "NovaObservabilityUtils"
+        url = uri("https://maven.pkg.github.com/ahincho/nova-java-observability-utils")
+        credentials {
+            username = System.getenv("GITHUB_ACTOR")
+            password = System.getenv("NOVA_PACKAGES_READ_TOKEN") ?: System.getenv("GITHUB_TOKEN")
+        }
+    }
 }
 
 val springBootVersion = "4.0.5"
@@ -41,7 +52,7 @@ dependencies {
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor:$springBootVersion")
 
     // Librería pura (transitiva al consumidor)
-    api("pe.edu.nova.java.libs:nova-observability-utils:0.1.0-SNAPSHOT")
+    api("pe.edu.nova.java.libs:nova-observability-utils:1.0.0")
 
     // Spring Boot
     implementation("org.springframework.boot:spring-boot-starter")
