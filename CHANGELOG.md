@@ -1,0 +1,17 @@
+# Changelog
+
+## 1.0.0 (2026-07-10)
+
+
+### Features
+
+* **ci:** migrate to release-please + tag-based publish flow (NOVA-SEMVER-13) ([ab9b660](https://github.com/ahincho/nova-java-observability-spring-boot-starter/commit/ab9b6600db5701cc3753369ee5a14e22d756c3b6))
+* **gradle:** add GPG signing plugin for Maven Central publishing (NOVA-SEMVER-10) ([caf6a10](https://github.com/ahincho/nova-java-observability-spring-boot-starter/commit/caf6a101ae978ac05d1522014c6db74a269e24be))
+* **gradle:** enable Local Build Cache and Configuration Cache (NOVA-SEMVER-23-24) ([10b5325](https://github.com/ahincho/nova-java-observability-spring-boot-starter/commit/10b5325f7e12d8230d807f07982cfcc33ce8c1a6))
+* initial commit - Starter Spring Boot: Golden Signals, OTel, Micrometer ([3a7e62a](https://github.com/ahincho/nova-java-observability-spring-boot-starter/commit/3a7e62a4f9362fe093460ddcf8ca55a525e63bb4))
+
+
+### Bug Fixes
+
+* **ci:** inline publish-on-tag and remove dirty closure for Gradle 9.6.1 ([c01cd3a](https://github.com/ahincho/nova-java-observability-spring-boot-starter/commit/c01cd3a070552e60f7ec511b3f9f2dc64e87721d))
+* **ci:** use PAT fallback for release-please to enable tag-triggered workflows ([0280efb](https://github.com/ahincho/nova-java-observability-spring-boot-starter/commit/0280efbec365ffc043aea7b20670c8b463cd3a1c))
