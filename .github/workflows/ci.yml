@@ -36,7 +36,6 @@ jobs:
   owasp:
     if: github.event_name == 'pull_request'
     uses: ahincho/nova-devops/.github/workflows/reusable-owasp-check.yml@main
-    continue-on-error: true # TODO: remove once NVD_API_KEY org secret is configured (NOVA-SEMVER-20)
     with:
       build-tool: gradle
     secrets: inherit
