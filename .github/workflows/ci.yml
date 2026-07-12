@@ -25,3 +25,25 @@ jobs:
       sonar-org: ahincho
       sonar-project-key: ahincho_nova-observability-starter
     secrets: inherit
+
+  matrix:
+    if: github.event_name == 'pull_request'
+    uses: ahincho/nova-devops/.github/workflows/reusable-build-matrix.yml@main
+    with:
+      build-tool: gradle
+    secrets: inherit
+
+  owasp:
+    if: github.event_name == 'pull_request'
+    uses: ahincho/nova-devops/.github/workflows/reusable-owasp-check.yml@main
+    continue-on-error: true # TODO: remove once NVD_API_KEY org secret is configured (NOVA-SEMVER-20)
+    with:
+      build-tool: gradle
+    secrets: inherit
+
+  sbom:
+    if: github.event_name == 'pull_request'
+    uses: ahincho/nova-devops/.github/workflows/reusable-sbom.yml@main
+    with:
+      build-tool: gradle
+    secrets: inherit
