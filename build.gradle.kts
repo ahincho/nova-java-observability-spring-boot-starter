@@ -4,6 +4,8 @@ plugins {
     checkstyle
     id("net.nemerosa.versioning") version "4.0.1"
     id("signing")
+    id("org.owasp.dependencycheck") version "12.2.2"
+    id("org.cyclonedx.bom") version "3.2.4"
 }
 
 versioning {
@@ -92,6 +94,14 @@ checkstyle {
     // wildcards (org.junit.jupiter.api.Assertions.*, net.jqwik.api.*), which
     // is an accepted convention that would otherwise trip AvoidStarImport.
     sourceSets = listOf(project.sourceSets.main.get())
+}
+
+dependencyCheck {
+    // NVD_API_KEY / NOVA_OWASP_FAIL_ON_CVSS are injected by reusable-owasp-check.yml.
+    // Locally (no env vars set) this defaults to "never fail" (11.0, matches plugin default)
+    // and an empty NVD key (slower updates, acceptable for local dev).
+    failBuildOnCVSS = (System.getenv("NOVA_OWASP_FAIL_ON_CVSS") ?: "11").toFloat()
+    nvd.apiKey = System.getenv("NVD_API_KEY") ?: ""
 }
 
 publishing {
