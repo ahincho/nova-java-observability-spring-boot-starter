@@ -200,10 +200,13 @@ dependencyCheck {
     // registry). The reusable-owasp-check.yml workflow generates the XML from
     // the central registry and exports the path as NOVA_OWASP_SUPPRESSIONS_FILE.
     // Empty when the repo variable is unset (safe default: no suppressions).
+    // Note: suppressionFiles is a ListProperty<File> in the Gradle plugin, not
+    // a plain List<File>, so we use .add() (verified against DependencyCheckExtension.groovy
+    // for the org.owasp.dependencycheck 12.2.2 plugin).
     System.getenv("NOVA_OWASP_SUPPRESSIONS_FILE")?.let { path ->
         val f = File(path)
         if (f.exists()) {
-            suppressionFiles = suppressionFiles + f
+            suppressionFiles.add(f)
         }
     }
 
