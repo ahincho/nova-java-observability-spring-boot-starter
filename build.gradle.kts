@@ -46,7 +46,7 @@ val springBootVersion = "4.0.5"
 val otelInstrumentationVersion = "2.27.0"
 
 dependencies {
-    // BOMs â€” applied to all configurations via api (propagates to implementation, compileOnly, etc.)
+    // BOMs — applied to all configurations via api (propagates to implementation, compileOnly, etc.)
     api(platform("org.springframework.boot:spring-boot-dependencies:$springBootVersion"))
     api(platform("io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom:$otelInstrumentationVersion"))
 
