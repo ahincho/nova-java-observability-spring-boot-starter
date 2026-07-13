@@ -46,14 +46,14 @@ val springBootVersion = "4.0.5"
 val otelInstrumentationVersion = "2.27.0"
 
 dependencies {
-    // BOMs — applied to all configurations via api (propagates to implementation, compileOnly, etc.)
+    // BOMs â€” applied to all configurations via api (propagates to implementation, compileOnly, etc.)
     api(platform("org.springframework.boot:spring-boot-dependencies:$springBootVersion"))
     api(platform("io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom:$otelInstrumentationVersion"))
 
     // Annotation processor needs explicit version since platform doesn't apply to annotationProcessor config
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor:$springBootVersion")
 
-    // Librería pura (transitiva al consumidor)
+    // LibrerÃ­a pura (transitiva al consumidor)
     api("pe.edu.nova.java.libs:nova-observability-utils:1.0.0")
 
     // Spring Boot
@@ -70,7 +70,7 @@ dependencies {
         exclude(group = "io.opentelemetry.contrib", module = "opentelemetry-azure-resources")
     }
 
-    // Micrometer → OTel bridge
+    // Micrometer â†’ OTel bridge
     implementation("io.micrometer:micrometer-tracing-bridge-otel")
 
     // Jakarta Servlet (para el filtro)
@@ -102,6 +102,49 @@ dependencyCheck {
     // and an empty NVD key (slower updates, acceptable for local dev).
     failBuildOnCVSS = (System.getenv("NOVA_OWASP_FAIL_ON_CVSS") ?: "11").toFloat()
     nvd.apiKey = System.getenv("NVD_API_KEY") ?: ""
+
+    // Must match the path reusable-owasp-check.yml caches AND restores the
+    // shared nova-devops NVD mirror into. Do NOT rely on the plugin's
+    // built-in default here - it was never verified/documented and previous
+    // cache sizes (15-57MB) strongly suggest it did not match what was
+    // being cached. Locally (no env var set) this falls back to a plain,
+    // dedicated directory outside ~/.gradle so it is never confused with
+    // unrelated Gradle caches.
+    data.directory = System.getenv("NOVA_OWASP_DATA_DIR")
+        ?: "${System.getProperty("user.home")}/.dependency-check-data"
+
+    // Investigation (2026-07-13, docs/java/06-semantic-versioning-en-java.md):
+    // a cold NVD sync took 50+ min mostly due to cache scoping, NOT these
+    // analyzers - but disabling ecosystems that plainly do not exist
+    // anywhere in this repo removes real (if smaller) analyze-phase
+    // overhead and network surface at zero detection-feature cost.
+    //
+    // Deliberately NOT disabled: nodeEnabled / nodeAudit.enabled
+    // (package.json IS present - commitlint/lefthook devDependencies -
+    // keep scanning it for real) and opensslEnabled (harmless/fast).
+    // RetireJS IS disabled: it fingerprints vendored/bundled JS *library*
+    // files - this repo has no such files, only commitlint.config.js.
+    analyzers {
+        retirejs.enabled = false
+        assemblyEnabled = false
+        nuspecEnabled = false
+        nugetconfEnabled = false
+        msbuildEnabled = false
+        golangDepEnabled = false
+        golangModEnabled = false
+        swiftEnabled = false
+        swiftPackageResolvedEnabled = false
+        cocoapodsEnabled = false
+        composerEnabled = false
+        cpanEnabled = false
+        cmakeEnabled = false
+        autoconfEnabled = false
+        bundleAuditEnabled = false
+        pyDistributionEnabled = false
+        pyPackageEnabled = false
+        rubygemsEnabled = false
+        dartEnabled = false
+    }
 }
 
 publishing {
