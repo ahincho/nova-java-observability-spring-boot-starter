@@ -97,6 +97,24 @@ dependencies {
             version { strictly("11.0.24") }
             because("Same CVEs in 11.0.22")
         }
+        // Force Kotlin 2.3.21+ and OpenTelemetry semconv 1.43.0+ to fix the
+        // remaining 3 CVEs >= 7 left after the 4.1.0 bump and the Tomcat
+        // constraint above. Versions verified against Maven Central 2026-07-13.
+        //   - kotlin-stdlib 2.3.21+ for CVE-2026-53914 CRITICAL 9.8
+        //   - opentelemetry-semconv 1.43.0+ for CVE-2026-29181 HIGH 7.5
+        //     and CVE-2026-39883 HIGH 7.3 (both in 1.40.0, fixed in 1.43.0+)
+        "implementation"("org.jetbrains.kotlin:kotlin-stdlib") {
+            version { strictly("2.3.21") }
+            because("CVE-2026-53914 CRITICAL 9.8 requires 2.3.21+")
+        }
+        "implementation"("io.opentelemetry.semconv:opentelemetry-semconv") {
+            version { strictly("1.43.0") }
+            because("CVE-2026-29181 HIGH 7.5 + CVE-2026-39883 HIGH 7.3 require 1.43.0+")
+        }
+        "implementation"("io.opentelemetry.semconv:opentelemetry-semconv-incubating") {
+            version { strictly("1.43.0") }
+            because("Same CVEs as opentelemetry-semconv 1.40.0")
+        }
     }
     // BOMs — applied to all configurations via api (propagates to implementation, compileOnly, etc.)
     api(platform("org.springframework.boot:spring-boot-dependencies:$springBootVersion"))
