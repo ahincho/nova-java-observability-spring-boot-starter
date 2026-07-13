@@ -53,7 +53,7 @@ dependencies {
     // Annotation processor needs explicit version since platform doesn't apply to annotationProcessor config
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor:$springBootVersion")
 
-    // LibrerÃ­a pura (transitiva al consumidor)
+    // Librería pura (transitiva al consumidor)
     api("pe.edu.nova.java.libs:nova-observability-utils:1.0.0")
 
     // Spring Boot
@@ -70,7 +70,7 @@ dependencies {
         exclude(group = "io.opentelemetry.contrib", module = "opentelemetry-azure-resources")
     }
 
-    // Micrometer â†’ OTel bridge
+    // Micrometer → OTel bridge
     implementation("io.micrometer:micrometer-tracing-bridge-otel")
 
     // Jakarta Servlet (para el filtro)
