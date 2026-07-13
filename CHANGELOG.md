@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/ahincho/nova-java-observability-spring-boot-starter/compare/v1.0.0...v1.0.1) (2026-07-13)
+
+
+### Bug Fixes
+
+* **ci:** OWASP CVE patches + Spring Boot 4.1.0 + dynamic FP suppression ([bbf8499](https://github.com/ahincho/nova-java-observability-spring-boot-starter/commit/bbf8499dedc501045c79e969aa70fe3de38a0bca))
+
 ## 1.0.0 (2026-07-10)
 
 
