@@ -104,8 +104,8 @@ dependencies {
         //   - opentelemetry-semconv 1.43.0+ for CVE-2026-29181 HIGH 7.5
         //     and CVE-2026-39883 HIGH 7.3 (both in 1.40.0, fixed in 1.43.0+)
         "implementation"("org.jetbrains.kotlin:kotlin-stdlib") {
-            version { strictly("2.3.21") }
-            because("CVE-2026-53914 CRITICAL 9.8 requires 2.3.21+")
+            version { strictly("2.4.0") }
+            because("CVE-2026-53914 CRITICAL 9.8 requires 2.4.0+ (2.3.21 is still flagged in NVD)")
         }
         "implementation"("io.opentelemetry.semconv:opentelemetry-semconv") {
             version { strictly("1.43.0") }
