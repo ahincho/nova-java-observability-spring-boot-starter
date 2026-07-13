@@ -195,6 +195,18 @@ dependencyCheck {
     data.directory = System.getenv("NOVA_OWASP_DATA_DIR")
         ?: "${System.getProperty("user.home")}/.dependency-check-data"
 
+    // Dynamic CVE suppression file (documented false positives, opt-in via
+    // NOVA_OWASP_CVE_SUPPRESSIONS repo variable + nova-devops/docs/owasp-suppressions.json
+    // registry). The reusable-owasp-check.yml workflow generates the XML from
+    // the central registry and exports the path as NOVA_OWASP_SUPPRESSIONS_FILE.
+    // Empty when the repo variable is unset (safe default: no suppressions).
+    System.getenv("NOVA_OWASP_SUPPRESSIONS_FILE")?.let { path ->
+        val f = File(path)
+        if (f.exists()) {
+            suppressionFiles = suppressionFiles + f
+        }
+    }
+
     // Investigation (2026-07-13, docs/java/06-semantic-versioning-en-java.md):
     // a cold NVD sync took 50+ min mostly due to cache scoping, NOT these
     // analyzers - but disabling ecosystems that plainly do not exist
