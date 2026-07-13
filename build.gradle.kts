@@ -47,6 +47,9 @@ repositories {
 // cover any classpath (compile, runtime, even buildscript transitives) so the
 // OWASP gate reflects the real, patched state.
 //
+//  - Apache Tomcat 11.0.24+ for CVE-2026-53434, CVE-2026-55276, CVE-2026-53404
+//    (Spring Boot 4.1.0's BOM pins tomcat-embed-core to 11.0.22 which is still
+//    vulnerable; 11.0.24 is the latest 11.0.x patch with the fixes)
 //  - Apache HttpComponents Core 4.4.16+ for CVE-2026-54428, CVE-2026-54399
 //  - Apache HttpComponents Core5 5.4.2+ for CVE-2026-54428, CVE-2026-54399
 //  - Apache Commons BeanUtils 1.11.0+ for CVE-2025-48734
@@ -75,7 +78,26 @@ configurations.all {
 val springBootVersion = "4.1.0"
 val otelInstrumentationVersion = "2.27.0"
 
+// Force Tomcat 11.0.24 strictly - fixes 3 CVEs in Spring Boot 4.1.0's
+// transitive tomcat-embed-* deps (CVE-2026-53434, CVE-2026-55276,
+// CVE-2026-53404 - all in 11.0.22, fixed in 11.0.23+). Constraints
+// + strictly() used instead of resolutionStrategy.force() to avoid
+// a Gradle 9 config-cache serialization bug.
 dependencies {
+    constraints {
+        "implementation"("org.apache.tomcat.embed:tomcat-embed-core") {
+            version { strictly("11.0.24") }
+            because("CVE-2026-53434, CVE-2026-55276, CVE-2026-53404 require 11.0.23+")
+        }
+        "implementation"("org.apache.tomcat.embed:tomcat-embed-websocket") {
+            version { strictly("11.0.24") }
+            because("Same CVEs in 11.0.22")
+        }
+        "implementation"("org.apache.tomcat.embed:tomcat-embed-el") {
+            version { strictly("11.0.24") }
+            because("Same CVEs in 11.0.22")
+        }
+    }
     // BOMs — applied to all configurations via api (propagates to implementation, compileOnly, etc.)
     api(platform("org.springframework.boot:spring-boot-dependencies:$springBootVersion"))
     api(platform("io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom:$otelInstrumentationVersion"))
